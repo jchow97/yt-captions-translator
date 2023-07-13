@@ -10,7 +10,7 @@
   "content_scripts": [
     {
       "js": ["scripts/content.js"],
-      "css": ["popup.css"],
+      "css": ["input.css"],
       "matches": [
         "https://www.youtube.com/watch*"
       ]
