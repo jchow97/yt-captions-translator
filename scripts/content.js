@@ -28,17 +28,3 @@ window.onload = function () {
 
     }, 1000)
 }
-
-function setupMutationObserver(targetElement) {
-    const observer = new MutationObserver(mutationsList => {
-        for (const mutation in mutationsList) {
-            if (mutation.type === '') {
-
-            }
-        }
-    })
-
-    const observerConfig = { childList: true, subtree: true };
-    observer.observe(targetElement, observerConfig);
-
-}
