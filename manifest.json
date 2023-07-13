@@ -10,9 +10,9 @@
   "content_scripts": [
     {
       "js": ["scripts/content.js"],
-      "css": ["input.css"],
+      "css": ["dist/output.css"],
       "matches": [
-        "https://www.youtube.com/watch*"
+        "https://*.youtube.com/watch*"
       ]
     }
   ],
