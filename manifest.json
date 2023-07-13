@@ -3,12 +3,20 @@
   "name": "YouTube Captions Translate",
   "version": "1.0",
   "description": "The \"YouTube Caption Translator\" is a powerful Chrome extension that enhances your YouTube experience by providing real-time translation of video captions to your preferred language. Say goodbye to language barriers and enjoy seamless access to video content from around the world!",
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": "images/hello_extensions.png"
+  },
   "content_scripts": [
     {
       "js": ["scripts/content.js"],
+      "css": ["popup.css"],
       "matches": [
         "https://www.youtube.com/watch*"
       ]
     }
+  ],
+  "permissions": [
+    "debugger"
   ]
 }
