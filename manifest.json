@@ -12,11 +12,19 @@
       "js": ["scripts/content.js"],
       "css": ["dist/output.css"],
       "matches": [
-        "https://*.youtube.com/watch*"
+        "*://*.youtube.com/watch*"
       ]
     }
   ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "host_permissions": [
+    "<all_urls>"
+  ],
   "permissions": [
-    "debugger"
+    "debugger",
+    "webRequest",
+    "scripting"
   ]
 }
