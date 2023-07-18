@@ -1,4 +1,5 @@
 window.onload = function () {
+    let captionsCounter = 0;
     window.setTimeout(function () {
         let menu = document.getElementById("center");
 
@@ -25,6 +26,5 @@ window.onload = function () {
             const observerConfig = { childList: true, subtree: true };
             observer.observe(captionWindowElement, observerConfig);
         }
-
     }, 1000)
 }
