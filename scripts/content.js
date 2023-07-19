@@ -30,8 +30,6 @@
             })
             const observerConfig = { childList: true, subtree: true };
             observer.observe(captionWindowElement, observerConfig);
-        } else {
-            captionChangeCounter++;
         }
 //     }, 1000)
 // }
