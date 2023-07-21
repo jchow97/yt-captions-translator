@@ -8,16 +8,21 @@
     <title>YouTube Captions Translate</title>
 </head>
 <body>
-<div class="min-w-400 min-h-600 max-w-xs">
-    <h2 class="text-2xl font-extrabold">YouTube Captions Translator</h2>
-    <form class="bg-white shadow-md rounded">
-        <label class="relative inline-flex items-center">
-            <input type="checkbox" value="" class="sr-only peer">
-            <div class="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+<div class="w-96 h-auto container">
+    <div class="flex justify-between items-center px-6 py-2">
+        <svg xmlns="http://www.w3.org/2000/svg" height="3em" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M0 128C0 92.7 28.7 64 64 64H256h48 16H576c35.3 0 64 28.7 64 64V384c0 35.3-28.7 64-64 64H320 304 256 64c-35.3 0-64-28.7-64-64V128zm320 0V384H576V128H320zM178.3 175.9c-3.2-7.2-10.4-11.9-18.3-11.9s-15.1 4.7-18.3 11.9l-64 144c-4.5 10.1 .1 21.9 10.2 26.4s21.9-.1 26.4-10.2l8.9-20.1h73.6l8.9 20.1c4.5 10.1 16.3 14.6 26.4 10.2s14.6-16.3 10.2-26.4l-64-144zM160 233.2L179 276H141l19-42.8zM448 164c11 0 20 9 20 20v4h44 16c11 0 20 9 20 20s-9 20-20 20h-2l-1.6 4.5c-8.9 24.4-22.4 46.6-39.6 65.4c.9 .6 1.8 1.1 2.7 1.6l18.9 11.3c9.5 5.7 12.5 18 6.9 27.4s-18 12.5-27.4 6.9l-18.9-11.3c-4.5-2.7-8.8-5.5-13.1-8.5c-10.6 7.5-21.9 14-34 19.4l-3.6 1.6c-10.1 4.5-21.9-.1-26.4-10.2s.1-21.9 10.2-26.4l3.6-1.6c6.4-2.9 12.6-6.1 18.5-9.8l-12.2-12.2c-7.8-7.8-7.8-20.5 0-28.3s20.5-7.8 28.3 0l14.6 14.6 .5 .5c12.4-13.1 22.5-28.3 29.8-45H448 376c-11 0-20-9-20-20s9-20 20-20h52v-4c0-11 9-20 20-20z"/></svg>
+        <h2 class="text-xl font-bold">YouTube Captions Translator</h2>
+    </div>
+    <div class="bg-white shadow-md">
+        <div class="flex justify-between items-center px-6 py-4">
             <span class="text-sm font-medium">Translate</span>
-        </label>
-        <div class="mb-4">
-            <span class="text-sm font-medium">Translate To:</span>
+            <label class="relative inline-flex items-center">
+                <input type="checkbox" value="" class="sr-only peer">
+                <div class="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+            </label>
+        </div>
+        <div class="flex justify-between items-center px-6 py-4">
+            <span class="inline-block text-sm font-medium">Translate To:</span>
             <div class="inline-block">
                 <button type="button" class="inline-flex w-full gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" id="language-button" aria-expanded="true" aria-haspopup="true">
                     Language
@@ -27,9 +32,9 @@
                 </button>
             </div>
         </div>
-        <div class="mb-4">
+        <div class="flex justify-between items-center px-6 py-4">
             <span class="text-sm font-medium">Translate With:</span>
-            <div class="inline-block">
+            <div class="relative inline-block text-left">
                 <button type="button" class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" id="engine-button" aria-expanded="true" aria-haspopup="true">
                     Engine
                     <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -38,10 +43,10 @@
                 </button>
             </div>
         </div>
-    </form>
-    <p class="text-center text-gray-500 text-xs">
-        Made by Jeffrey Chow
-    </p>
+        <p class="text-center text-gray-500 text-xs">
+            Made by Jeffrey Chow
+        </p>
+    </div>
 </div>
 <script src="popup.js"></script>
 </body>
