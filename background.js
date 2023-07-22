@@ -1,48 +1,76 @@
+let cache = {}
 let requestCounter = 0;
-let translatedTimedText = [];
+
 chrome.webRequest.onCompleted.addListener(
     async function (details) {
+        // Listen for HTTP requests for timedtext.
         if (details && requestCounter % 2 === 0) {
-            // Clear existing array
-            translatedTimedText = []
-            console.log("Loading: ", details.url);
+            // Update request counter right away.
+            requestCounter++;
 
-            const response = await fetch(details.url);
-            let json = await response.json();
+            // get the video id
+            const videoId = getYoutubeVideoId(details.url);
 
-            for (let i = 0; i < json.events.length; i++) {
-                const caption = json.events[i].segs[0].utf8;
-                const timeStart = json.events[i].tStartMs;
-                const duration = json.events[i].dDurationMs;
-                translatedTimedText.push(
-                    {
-                        // TODO: TRANSLATE AND RETURN AN ARRAY OF TRANSLATED STRINGS
-                        translatedCaption: "[Translated] " + caption,
-                        timeStart: timeStart,
-                        duration: duration
-                    });
+            // check cache, if not in, make a fetch, else do nothing
+            if (!cache.hasOwnProperty(videoId)) {
+                let translatedTimedText = [];
+
+                console.log("Loading: ", videoId);
+                const response = await fetch(details.url);
+                let json = await response.json();
+
+                // Translate every captions
+                for (let i = 0; i < json.events.length; i++) {
+                    const caption = json.events[i].segs[0].utf8;
+                    const timeStart = json.events[i].tStartMs;
+                    const duration = json.events[i].dDurationMs;
+
+                    // Append to translatedTimedText list.
+                    translatedTimedText.push(
+                        {
+                            translatedCaption: "[Translated] " + caption,
+                            timeStart: timeStart,
+                            duration: duration
+                        });
+                }
+
+                // Add translated text to cache
+                cache[videoId] = translatedTimedText;
+                console.log(translatedTimedText);
             }
-            console.log(json.events);
         }
-        requestCounter++;
     },
     {
         urls: ["*://*.youtube.com/api/timedtext*"],
     }
-)
+);
 
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
-        if (request.time) {
+        // Check if we have the videoId's translation
+        if (cache.hasOwnProperty(request.videoId) && request.time) {
             const requestMs = request.time * 1000;
-            for (let i = 0; i < translatedTimedText.length; i++) {
-                const startTime = translatedTimedText[i].timeStart;
-                const endTime = translatedTimedText[i].timeStart + translatedTimedText[i].duration;
+            for (let i = 0; i < cache[request.videoId].length; i++) {
+                const startTime = cache[request.videoId][i].timeStart;
+                const endTime = cache[request.videoId][i].timeStart + cache[request.videoId][i].duration;
                 if (requestMs >= startTime && requestMs < endTime) {
-                    sendResponse({caption: translatedTimedText[i].translatedCaption})
+                    sendResponse({caption: cache[request.videoId][i].translatedCaption})
                     break;
                 }
             }
+        } else {
+            console.log("Something went wrong!")
         }
     }
-)
+);
+
+function getYoutubeVideoId(url) {
+    // Create URL object
+    let urlObj = new URL(url);
+
+    // Get query parameters
+    let params = new URLSearchParams(urlObj.search);
+
+    // Get video id from parameters
+    return params.get('v');
+}
