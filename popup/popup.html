@@ -23,24 +23,74 @@
         </div>
         <div class="flex justify-between items-center px-6 py-4">
             <span class="inline-block text-sm font-medium">Translate To:</span>
-            <div class="inline-block">
-                <button type="button" class="inline-flex w-full gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" id="language-button" aria-expanded="true" aria-haspopup="true">
-                    Language
-                    <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
-                    </svg>
-                </button>
+            <div class="relative inline-block text-left">
+                <div>
+                    <button type="button" class="dropdown-toggle inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" id="language-dropdown" aria-expanded="true" aria-haspopup="true">
+                        <span class="dropdown-label">Language</span>
+                        <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="dropdown-content hidden absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1" id="language-dropdown-content">
+                    <div class="py-1" role="none">
+                        <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+                        <a href="#" data-value="EN" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="lang-5">English</a>
+<!--                        <a href="#" data-value="BG" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="lang-0">Bulgarian</a>-->
+                        <a href="#" data-value="ZH" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="lang-1">Chinese</a>
+<!--                        <a href="#" data-value="CS" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="lang-2">Czech</a>-->
+<!--                        <a href="#" data-value="DA" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="lang-3">Danish</a>-->
+<!--                        <a href="#" data-value="NL" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="lang-4">Dutch</a>-->
+<!--                        <a href="#" data-value="EN-GB" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="lang-6">English (British)</a>-->
+<!--                        <a href="#" data-value="EN-US" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="lang-7">English (US)</a>-->
+<!--                        <a href="#" data-value="ET" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="lang-8">Estonian</a>-->
+<!--                        <a href="#" data-value="FI" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="lang-9">Finnish</a>-->
+                        <a href="#" data-value="FR" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="lang-10">French</a>
+<!--                        <a href="#" data-value="DE" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="lang-11">German</a>-->
+<!--                        <a href="#" data-value="EL" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="lang-12">Greek</a>-->
+<!--                        <a href="#" data-value="HU" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="lang-13">Hungarian</a>-->
+<!--                        <a href="#" data-value="ID" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="lang-14">Indonesian</a>-->
+<!--                        <a href="#" data-value="IT" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="lang-15">Italian</a>-->
+                        <a href="#" data-value="JA" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="lang-16">Japanese</a>
+<!--                        <a href="#" data-value="KO" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="lang-17">Korean</a>-->
+<!--                        <a href="#" data-value="LV" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="lang-18">Latvian</a>-->
+<!--                        <a href="#" data-value="LT" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="lang-19">Lithuanian</a>-->
+<!--                        <a href="#" data-value="NB" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="lang-20">Norwegian</a>-->
+<!--                        <a href="#" data-value="PL" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="lang-21">Polish</a>-->
+<!--                        <a href="#" data-value="PT-BR" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="lang-22">Portuguese (Brazilian)</a>-->
+<!--                        <a href="#" data-value="PT-PT" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="lang-23">Portuguese</a>-->
+<!--                        <a href="#" data-value="RO" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="lang-24">Romanian</a>-->
+<!--                        <a href="#" data-value="RU" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="lang-25">Russian</a>-->
+<!--                        <a href="#" data-value="SK" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="lang-26">Slovak</a>-->
+<!--                        <a href="#" data-value="SL" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="lang-27">Slovenian</a>-->
+<!--                        <a href="#" data-value="ES" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="lang-28">Spanish</a>-->
+<!--                        <a href="#" data-value="SV" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="lang-29">Swedish</a>-->
+<!--                        <a href="#" data-value="TR" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="lang-30">Turkish</a>-->
+<!--                        <a href="#" data-value="UK" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="lang-31">Ukranian</a>-->
+                    </div>
+                </div>
             </div>
         </div>
         <div class="flex justify-between items-center px-6 py-4">
             <span class="text-sm font-medium">Translate With:</span>
             <div class="relative inline-block text-left">
-                <button type="button" class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" id="engine-button" aria-expanded="true" aria-haspopup="true">
-                    Engine
-                    <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
-                    </svg>
-                </button>
+                <div>
+                    <button type="button" class="dropdown-toggle inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" id="engine-dropdown" aria-expanded="true" aria-haspopup="true">
+                        <span class="dropdown-label">Engine</span>
+                        <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="dropdown-content hidden absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1" id="engine-dropdown-content">
+                    <div class="py-1" role="none">
+                        <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+                        <a href="#" data-value="DeepL" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="engine-item-0">DeepL</a>
+<!--                        <a href="#" data-value="ChatGPT" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="engine-item-1">ChatGPT</a>-->
+                    </div>
+                </div>
             </div>
         </div>
         <p class="text-center text-gray-500 text-xs">
