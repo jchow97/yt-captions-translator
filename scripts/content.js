@@ -8,7 +8,6 @@
         //
         // menu.appendChild(translateButton);
         const captionWindowElement = document.querySelector('.ytp-caption-window-container');
-
         if (captionWindowElement) {
             const observer = new MutationObserver(async (mutationsList, observer) => {
                 for (const mutation of mutationsList) {
@@ -17,7 +16,12 @@
                         observer.disconnect();
                         // Retrieve Text
                         const currentTime = document.querySelector("video").currentTime;
-                        const response = await chrome.runtime.sendMessage({time: currentTime});
+                        const videoId = document.querySelector("video").id;
+                        const response = await chrome.runtime.sendMessage(
+                            {
+                                videoId: videoId,
+                                time: currentTime
+                            });
                         // Replace Text
                         if (response) {
                             targetElement.textContent = response.caption;
