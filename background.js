@@ -1,12 +1,13 @@
 let cache = {}
+let requestCounter = 0;
 
 chrome.webRequest.onCompleted.addListener(
     async function (details) {
-
         // Listen for HTTP requests for timedtext.
+        if (details && requestCounter % 2 === 0) {
+            // Update request counter right away.
+            requestCounter++;
 
-
-        if (details) {
             // get the video id
             const videoId = getYoutubeVideoId(details.url);
 
