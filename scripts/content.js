@@ -7,7 +7,7 @@ if (captionWindowElement) {
                 observer.disconnect();
                 // Retrieve Text
                 const currentTime = document.querySelector("video").currentTime;
-                const videoId = document.querySelector("video").id;
+                const videoId = getYoutubeVideoId(window.location.href);
                 const response = await chrome.runtime.sendMessage(
                     {
                         videoId: videoId,
@@ -25,4 +25,15 @@ if (captionWindowElement) {
     })
     const observerConfig = { childList: true, subtree: true };
     observer.observe(captionWindowElement, observerConfig);
+}
+
+function getYoutubeVideoId(url) {
+    // Create URL object
+    let urlObj = new URL(url);
+
+    // Get query parameters
+    let params = new URLSearchParams(urlObj.search);
+
+    // Get video id from parameters
+    return params.get('v');
 }
