@@ -1,3 +1,5 @@
+import DeepLTranslator from "./translationEngines/deepLTranslator.js";
+
 let cache = {}
 let requestCounter = 0;
 
@@ -19,9 +21,21 @@ chrome.webRequest.onCompleted.addListener(
                 const response = await fetch(details.url);
                 let json = await response.json();
 
-                // Translate every captions
+                // Merge captions to one string.
+                let fullCaptions = "";
+                json.events.forEach((caption) => {
+                    fullCaptions += caption.segs[0].utf8 + '\n';
+                });
+
+                // Translate
+                let translatedCaptions = await DeepLTranslator.translateCaptions(fullCaptions, "EN");
+
+                // Revert to list structure.
+                let translatedCaptionsList = translatedCaptions.split('\n');
+
+
                 for (let i = 0; i < json.events.length; i++) {
-                    const caption = json.events[i].segs[0].utf8;
+                    const caption = translatedCaptionsList[i];
                     const timeStart = json.events[i].tStartMs;
                     const duration = json.events[i].dDurationMs;
 
