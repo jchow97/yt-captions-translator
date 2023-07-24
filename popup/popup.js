@@ -1,3 +1,17 @@
+let settings = {
+    translate: false,
+    language: "",
+    engine: ""
+}
+chrome.storage.local.set(settings);
+
+var translateCheckbox = document.querySelector('input[type="checkbox"]');
+
+translateCheckbox.addEventListener('change', function() {
+    settings.translate = this.checked;
+    chrome.storage.local.set(settings);
+});
+
 var dropdownToggles = document.querySelectorAll('.dropdown-toggle');
 dropdownToggles.forEach(function (toggle) {
     toggle.addEventListener('click', function () {
@@ -14,9 +28,17 @@ menuItems.forEach(function (menuItem) {
         var dropdownContent = this.parentElement.parentElement;
         dropdownContent.classList.add('hidden');
 
-        // Do something with language code
+        // Do something
         var value = this.getAttribute('data-value');
-        console.log('You clicked: ' + value);
+        if (this.parentElement.parentElement.id === "language-dropdown-content") {
+            settings.language = value;
+            chrome.storage.local.set(settings);
+            console.log("You clicked language: " + value)
+        } else if (this.parentElement.parentElement.id === "engine-dropdown-content") {
+            settings.engine = value;
+            chrome.storage.local.set(settings);
+            console.log("You clicked engine: " + value)
+        }
 
         // Update the dropdown button's text
         var dropdownLabel = this.parentElement.parentElement.previousElementSibling.querySelector('.dropdown-label');

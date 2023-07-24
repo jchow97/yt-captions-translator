@@ -26,6 +26,7 @@
   "permissions": [
     "debugger",
     "webRequest",
-    "scripting"
+    "scripting",
+    "storage"
   ]
 }
