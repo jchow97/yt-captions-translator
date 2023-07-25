@@ -21,18 +21,18 @@ chrome.webRequest.onCompleted.addListener(
                 const response = await fetch(details.url);
                 let json = await response.json();
 
-                // Merge captions to one string.
+                // Merge captions to one string with newline separator.
                 let fullCaptions = "";
                 json.events.forEach((caption) => {
                     fullCaptions += caption.segs[0].utf8 + '\n';
                 });
 
+                const translator = new DeepLTranslator();
                 // Translate
-                let translatedCaptions = await DeepLTranslator.translateCaptions(fullCaptions, "EN");
+                let translatedCaptions = await translator.translateBasic(fullCaptions, "EN");
 
                 // Revert to list structure.
-                let translatedCaptionsList = translatedCaptions.split('\n');
-
+                let translatedCaptionsList = translatedCaptions.text.split('\n');
 
                 for (let i = 0; i < json.events.length; i++) {
                     const caption = translatedCaptionsList[i];
