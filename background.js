@@ -29,7 +29,7 @@ chrome.webRequest.onCompleted.addListener(
 
                 const translator = new DeepLTranslator();
                 // Translate
-                let translatedCaptions = await translator.translateBasic(fullCaptions, "EN");
+                let translatedCaptions = await translator.translateStub(fullCaptions, "EN");
 
                 // Revert to list structure.
                 let translatedCaptionsList = translatedCaptions.text.split('\n');
