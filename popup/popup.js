@@ -18,10 +18,9 @@ const saveOptions = () => {
 
 // Restores toggle and dropdown state using the settings stored in chrome.storage.
 const restoreOptions = () => {
-    debugger;
     chrome.storage.local.get(
         {
-            translate: 'false',
+            translate: false,
             languageName: 'Select a Language',
             languageCode: '',
             engineName: 'Select an Engine',
