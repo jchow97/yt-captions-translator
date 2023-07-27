@@ -16,13 +16,15 @@ chrome.webRequest.onCompleted.addListener(
                 {
                     translate: false,
                     languageCode: '',
+                    engineCode: ''
                 },
                 async (items) => {
                     const translate = items.translate;
                     const lang = items.languageCode;
+                    const engine = items.engineCode;
 
                     // do not continue if requirements are not met or already translated.
-                    if (translate === false || lang === '' || cache.hasOwnProperty(videoId)) {
+                    if (translate === false || lang === '' || engine === '' || cache.hasOwnProperty(videoId)) {
                         requestCounter++;
                         return;
                     }
