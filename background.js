@@ -4,54 +4,67 @@ let cache = {}
 let requestCounter = 0;
 
 chrome.webRequest.onCompleted.addListener(
-    async function (details) {
+    function (details) {
+        // Update request counter right away.
+        requestCounter++;
         // Listen for HTTP requests for timedtext.
-        if (details && requestCounter % 2 === 0) {
-            // Update request counter right away.
-            requestCounter++;
-
+        if (details && requestCounter % 2 === 1) {
             // get the video id
             const videoId = getYoutubeVideoId(details.url);
 
-            // check cache, if not in, make a fetch, else do nothing
-            if (!cache.hasOwnProperty(videoId)) {
-                let translatedTimedText = [];
+            chrome.storage.local.get(
+                {
+                    translate: false,
+                    languageCode: '',
+                },
+                async (items) => {
+                    const translate = items.translate;
+                    const lang = items.languageCode;
 
-                console.log("Loading: ", videoId);
-                const response = await fetch(details.url);
-                let json = await response.json();
+                    // do not continue if requirements are not met or already translated.
+                    if (translate === false || lang === '' || cache.hasOwnProperty(videoId)) {
+                        requestCounter++;
+                        return;
+                    }
 
-                // Merge captions to one string with newline separator.
-                let fullCaptions = "";
-                json.events.forEach((caption) => {
-                    fullCaptions += caption.segs[0].utf8 + '\n';
-                });
+                    let translatedTimedText = [];
 
-                const translator = new DeepLTranslator();
-                // Translate
-                let translatedCaptions = await translator.translateStub(fullCaptions, "EN");
+                    console.log("Loading: ", videoId);
+                    const response = await fetch(details.url);
+                    let json = await response.json();
 
-                // Revert to list structure.
-                let translatedCaptionsList = translatedCaptions.text.split('\n');
+                    // Merge captions to one string with newline separator.
+                    let fullCaptions = "";
+                    json.events.forEach((caption) => {
+                        fullCaptions += caption.segs[0].utf8 + '\n';
+                    });
 
-                for (let i = 0; i < json.events.length; i++) {
-                    const caption = translatedCaptionsList[i];
-                    const timeStart = json.events[i].tStartMs;
-                    const duration = json.events[i].dDurationMs;
+                    const translator = new DeepLTranslator();
+                    // Translate
+                    let translatedCaptions = await translator.translateStub(fullCaptions, lang);
 
-                    // Append to translatedTimedText list.
-                    translatedTimedText.push(
-                        {
-                            translatedCaption: "[Translated] " + caption,
-                            timeStart: timeStart,
-                            duration: duration
-                        });
+                    // Revert to list structure.
+                    let translatedCaptionsList = translatedCaptions.text.split('\n');
+
+                    for (let i = 0; i < json.events.length; i++) {
+                        const caption = translatedCaptionsList[i];
+                        const timeStart = json.events[i].tStartMs;
+                        const duration = json.events[i].dDurationMs;
+
+                        // Append to translatedTimedText list.
+                        translatedTimedText.push(
+                            {
+                                translatedCaption: "[Translated] " + caption,
+                                timeStart: timeStart,
+                                duration: duration
+                            });
+                    }
+
+                    // Add translated text to cache
+                    cache[videoId] = translatedTimedText;
+                    console.log(translatedTimedText);
                 }
-
-                // Add translated text to cache
-                cache[videoId] = translatedTimedText;
-                console.log(translatedTimedText);
-            }
+            );
         }
     },
     {
