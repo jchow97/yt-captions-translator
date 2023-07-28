@@ -28,6 +28,7 @@ if (captionWindowElement) {
                         const response = await chrome.runtime.sendMessage(
                             {
                                 videoId: videoId,
+                                languageCode: lang,
                                 time: currentTime
                             });
                         // Replace Text

@@ -23,8 +23,16 @@ chrome.webRequest.onCompleted.addListener(
                     const lang = items.languageCode;
                     const engine = items.engineCode;
 
+                    const key = lang + '_' + videoId;
+                    const existingTranslation = await chrome.storage.session.get({
+                        [key]: undefined
+                    },
+                    (code) => {
+                        return code[key];
+                    });
+
                     // do not continue if requirements are not met or already translated.
-                    if (translate === false || lang === '' || engine === '' || cache.hasOwnProperty(videoId)) {
+                    if (!translate || lang === '' || engine === '' || existingTranslation !== undefined) {
                         requestCounter++;
                         return;
                     }
@@ -63,7 +71,9 @@ chrome.webRequest.onCompleted.addListener(
                     }
 
                     // Add translated text to cache
-                    cache[videoId] = translatedTimedText;
+                    const captions = {}
+                    captions[key] = translatedTimedText;
+                    chrome.storage.session.set(captions);
                     console.log(translatedTimedText);
                 }
             );
@@ -76,14 +86,15 @@ chrome.webRequest.onCompleted.addListener(
 
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
+        const key = request.languageCode + '_' + request.videoId;
         // Check if we have the videoId's translation
-        if (cache.hasOwnProperty(request.videoId) && request.time) {
+        if (cache.hasOwnProperty(key) && request.time) {
             const requestMs = request.time * 1000;
-            for (let i = 0; i < cache[request.videoId].length; i++) {
-                const startTime = cache[request.videoId][i].timeStart;
-                const endTime = cache[request.videoId][i].timeStart + cache[request.videoId][i].duration;
+            for (let i = 0; i < cache[key].length; i++) {
+                const startTime = cache[key][i].timeStart;
+                const endTime = cache[key][i].timeStart + cache[key][i].duration;
                 if (requestMs >= startTime && requestMs < endTime) {
-                    sendResponse({caption: cache[request.videoId][i].translatedCaption})
+                    sendResponse({caption: cache[key][i].translatedCaption})
                     break;
                 }
             }
@@ -92,6 +103,16 @@ chrome.runtime.onMessage.addListener(
         }
     }
 );
+
+// Update background's local cache when chrome.storage changes. This let's onMessage listener callback function stay
+// synchronous. Async functions do not get received by content.js properly.
+chrome.storage.onChanged.addListener((changes, area) => {
+    if (area === 'session') {
+        chrome.storage.session.get(function(result) {
+            cache = result;
+        })
+    }
+});
 
 function getYoutubeVideoId(url) {
     // Create URL object
