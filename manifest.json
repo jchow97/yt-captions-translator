@@ -27,7 +27,7 @@
     "type": "module"
   },
   "host_permissions": [
-    "<all_urls>"
+    "*://*.youtube.com/watch*"
   ],
   "permissions": [
     "debugger",
