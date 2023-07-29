@@ -64,7 +64,7 @@ chrome.webRequest.onCompleted.addListener(
                         // Append to translatedTimedText list.
                         translatedTimedText.push(
                             {
-                                translatedCaption: "[Translated] " + caption,
+                                translatedCaption: caption,
                                 timeStart: timeStart,
                                 duration: duration
                             });
