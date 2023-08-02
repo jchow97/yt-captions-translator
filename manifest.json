@@ -27,7 +27,8 @@
     "type": "module"
   },
   "host_permissions": [
-    "*://*.youtube.com/watch*"
+    "*://*.youtube.com/watch*",
+    "https://api-free.deepl.com/v2/*"
   ],
   "permissions": [
     "debugger",
