@@ -49,23 +49,24 @@ chrome.webRequest.onCompleted.addListener(
                         fullCaptions += caption.segs[0].utf8 + '\n';
                     });
 
+                    // Initialize translator
                     const translator = new DeepLTranslator();
 
+                    // Split long texts
                     let textList = [];
                     if (fullCaptions.length > 800) {
                         textList = splitString(fullCaptions, 800);
                     } else {
                         textList = [fullCaptions];
                     }
+
+                    // Translate
                     let translatedList = [];
 
                     for await (const text of textList) {
                         translatedList.push(await translator.translateBasic(text, lang));
                     }
                     const translatedCaptions = translatedList.join('\n')
-
-                    // Translate
-                    // let translatedCaptions = await translator.translateStub(fullCaptions, lang);
 
                     // Revert to list structure.
                     let translatedCaptionsList = translatedCaptions.split('\n');
