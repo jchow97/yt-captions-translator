@@ -23,12 +23,6 @@ export default class DeepLTranslator {
         console.log(translation);
         return translation;
     }
-    static async translateMultipleSentences(text, lang) {
-
-    }
-    static async translateLargeText(text, lang) {
-
-    }
 
     async translateStub(text, lang) {
         const result = {
