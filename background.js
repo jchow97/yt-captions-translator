@@ -50,11 +50,25 @@ chrome.webRequest.onCompleted.addListener(
                     });
 
                     const translator = new DeepLTranslator();
+
+                    let textList = [];
+                    if (fullCaptions.length > 800) {
+                        textList = splitString(fullCaptions, 800);
+                    } else {
+                        textList = [fullCaptions];
+                    }
+                    let translatedList = [];
+
+                    for await (const text of textList) {
+                        translatedList.push(await translator.translateBasic(text, lang));
+                    }
+                    const translatedCaptions = translatedList.join('\n')
+
                     // Translate
-                    let translatedCaptions = await translator.translateStub(fullCaptions, lang);
+                    // let translatedCaptions = await translator.translateStub(fullCaptions, lang);
 
                     // Revert to list structure.
-                    let translatedCaptionsList = translatedCaptions.text.split('\n');
+                    let translatedCaptionsList = translatedCaptions.split('\n');
 
                     for (let i = 0; i < json.events.length; i++) {
                         const caption = translatedCaptionsList[i];
@@ -123,4 +137,31 @@ function getYoutubeVideoId(url) {
 
     // Get video id from parameters
     return params.get('v');
+}
+
+function splitString(str, length) {
+    var result = [];
+    var startPosition = 0;
+
+    while (startPosition < str.length) {
+        var endPosition = startPosition + length;
+
+        if (endPosition < str.length) {
+            var nearestSpaceIndex = str.lastIndexOf(' ', endPosition);
+            var nearestLineBreakIndex = str.lastIndexOf('\n', endPosition);
+
+            // Find nearest space or line break
+            endPosition = Math.max(nearestSpaceIndex, nearestLineBreakIndex);
+
+            // If no space or line break found, split by length
+            if (endPosition <= startPosition) {
+                endPosition = startPosition + length;
+            }
+        }
+
+        result.push(str.substring(startPosition, endPosition));
+        startPosition = endPosition + 1;
+    }
+
+    return result;
 }

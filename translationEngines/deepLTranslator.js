@@ -19,7 +19,7 @@ export default class DeepLTranslator {
         }
         const result = await fetch('https://api-free.deepl.com/v2/translate', options);
         const json = await result.json();
-        const translation = json.translations[0];
+        const translation = json.translations[0].text;
         console.log(translation);
         return translation;
     }
