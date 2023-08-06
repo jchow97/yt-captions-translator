@@ -52,6 +52,10 @@ chrome.webRequest.onCompleted.addListener(
                     // Initialize translator
                     const translator = new DeepLTranslator();
 
+                    if (translator.authKey === undefined) {
+                        await translator.getKey();
+                    }
+
                     // Split long texts
                     let textList = [];
                     if (fullCaptions.length > 800) {
