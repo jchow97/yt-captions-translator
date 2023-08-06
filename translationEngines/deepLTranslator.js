@@ -1,13 +1,14 @@
 export default class DeepLTranslator {
     constructor() {
-        fetch('https://1opw2ncyjk.execute-api.us-west-2.amazonaws.com/default/apiSecureKeys', {
+        this.authKey = undefined;
+    }
+
+    async getKey() {
+        const result = await fetch('https://1opw2ncyjk.execute-api.us-west-2.amazonaws.com/default/apiSecureKeys', {
             method: 'POST',
-        })
-            .then(response => response.text())
-            .then(data => {
-                console.log(data);
-                this.authKey = data.message;
-            });
+        });
+        const json = await result.json();
+        this.authKey = json.message;
     }
 
     async translateBasic(text, lang) {
