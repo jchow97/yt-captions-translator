@@ -29,6 +29,7 @@ if (captionWindowElement) {
                             {
                                 videoId: videoId,
                                 languageCode: lang,
+                                engineCode: engine,
                                 time: currentTime
                             });
                         // Replace Text
