@@ -23,7 +23,7 @@ chrome.webRequest.onCompleted.addListener(
                     const lang = items.languageCode;
                     const engine = items.engineCode;
 
-                    const key = lang + '_' + videoId;
+                    const key = engine + '_' + lang + '_' + videoId;
                     const existingTranslation = await chrome.storage.session.get({
                         [key]: undefined
                     },
@@ -101,7 +101,7 @@ chrome.webRequest.onCompleted.addListener(
 
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
-        const key = request.languageCode + '_' + request.videoId;
+        const key = request.engineCode + '_' + request.languageCode + '_' + request.videoId;
         // Check if we have the videoId's translation
         if (cache.hasOwnProperty(key) && request.time) {
             const requestMs = request.time * 1000;
