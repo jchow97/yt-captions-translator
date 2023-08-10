@@ -28,5 +28,7 @@ Installation: To install the extension, follow these steps:
 ## Reporting Issues
 If you encounter any bugs, issues, or have suggestions for improving the extension, please feel free to email me at jchow.developer@gmail.com. 
 
+## Publish Status
+This extension is currently not published on the Chrome Web Store because it lacks scalability for many users and a privacy policy. Currently, the only translation engine is via DeepL Translator, which only supports 500,000 characters per month.
  
- *Currently a work in progress.
+ *Feature is currently a work in progress.
